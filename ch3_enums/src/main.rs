@@ -26,4 +26,10 @@ fn main() {
     let click = WebEvent::Click { x: 20, y: 80 };
     let load = WebEvent::PageLoad;
     let unload = WebEvent::PageUnload;
+
+    inspect(pressed);
+    inspect(pasted);
+    inspect(click);
+    inspect(load);
+    inspect(unload);
 }
