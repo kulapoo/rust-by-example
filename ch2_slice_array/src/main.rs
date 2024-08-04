@@ -29,7 +29,7 @@ fn main() {
     // `Option`. This can be matched as shown below, or used with
     // `.expect()` if you would like the program to exit with a nice
     // message instead of happily continue.
-    for i in 0..xs.len() + 1 { // Oops, one element too far!
+    for i in 0..xs.len() {
         match xs.get(i) {
             Some(xval) => println!("{}: {}", i, xval),
             None => println!("Slow down! {} is too far!", i),

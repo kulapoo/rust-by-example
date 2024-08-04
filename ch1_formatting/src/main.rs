@@ -1,4 +1,5 @@
-use std::{fmt, os::unix::raw::gid_t};
+use std::fmt::Display;
+
 
 struct City {
     name: &'static str,
@@ -6,15 +7,16 @@ struct City {
     lon: f32
 }
 
-impl fmt::Display for City {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl Display for City {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let lat_c = if self.lat >= 0.0 { 'N' } else { 'S' };
-        let lon_c = if self.lon >= 0.0 { 'E' } else { 'W' };
+        let lon_c = if self.lon >= 0.0 { 'E' } else {'W'};
 
         write!(f, "{}: {:.3}°{} {:.3}°{}",
                self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
     }
 }
+
 
 #[derive(Debug)]
 struct Color {
@@ -23,13 +25,10 @@ struct Color {
     blue: u8
 }
 
-
-impl fmt::Display for Color {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let r = format!("{:X}", self.red);
-        let g = format!("{:X}", self.green);
-        let b = format!("{:X}", self.blue);
-        writeln!(f, "RGB ({r}, {g}, {b}) 0x{r:0>2}{g:0>2}{b:0>2}")
+impl Display for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let color_int = (self.red as u32 * 65536) + (self.green as u32 * 256) + self.blue as u32;
+        write!(f, "RGB ({}, {}, {}) 0x{:06X}", self.red, self.green, self.blue, color_int)
     }
 }
 
@@ -41,6 +40,7 @@ fn main() {
     ] {
         println!("{}", city);
     }
+
     for color in [
         Color { red: 128, green: 255, blue: 90 },
         Color { red: 0, green: 3, blue: 254 },

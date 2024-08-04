@@ -1,9 +1,8 @@
 use crate::List::*;
 
-#[derive(Debug)]
 enum List {
     Cons(u32, Box<List>),
-    Nil
+    Nil,
 }
 
 impl List {
@@ -27,24 +26,19 @@ impl List {
     fn stringify(&self) -> String {
         match *self {
             Cons(head, ref tail) => {
-                // `format!` is similar to `print!`, but returns a heap
-                // allocated string instead of printing to the console
                 format!("{}, {}", head, tail.stringify())
             },
-            Nil => {
-                format!("Nil")
-            },
+            Nil => format!("Nil")
         }
     }
 }
 
 fn main() {
-    // Create an empty linked list
     let mut list = List::new();
 
     // Prepend some elements
     list = list.prepend(1);
-    list = list.prepend(5);
+    list = list.prepend(2);
     list = list.prepend(3);
 
     // Show the final state of the list

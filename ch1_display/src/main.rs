@@ -1,26 +1,18 @@
 use std::fmt;
 
-struct Structure(i32);
-
-impl fmt::Display for Structure {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
 #[derive(Debug)]
 struct MinMax(i64, i64);
 
 impl fmt::Display for MinMax {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({} {})", self.0, self.1)
+        write!(f, "({}, {})", self.0, self.1)
     }
 }
 
 #[derive(Debug)]
 struct Point2D {
     x: f64,
-    y: f64
+    y: f64,
 }
 
 impl fmt::Display for Point2D {
@@ -37,30 +29,48 @@ struct Complex {
 
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} + {}", self.real, self.imag)
+        write!(f, "{} + {}i", self.real, self.imag)
     }
 }
 
 
-fn main() {
-    let s = Structure(5);
-    println!("{}", s);
+impl fmt::Binary for Point2D {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "x: {:b}, y: {:b}", self.x as i32, self.y as i32)
+    }
+}
 
+fn main() {
     let minmax = MinMax(0, 14);
+
 
     println!("Compare structures:");
     println!("Display: {}", minmax);
     println!("Debug: {:?}", minmax);
 
-    let big_range =   MinMax(-300, 300);
+    let big_range = MinMax(-300, 300);
     let small_range = MinMax(-3, 3);
 
-    println!("The big range is {big} and the small is {small}",
-             small = small_range,
-             big = big_range);
+    println!("The big range is {big} and the small is {small}", big = big_range, small = small_range);
 
-    let complex = Complex { real: 3.3, imag: 7.2 };
+    let point = Point2D {
+        x: 3.3,
+        y: 7.2
+    };
 
+    println!("Compare points:");
+    println!("Display: {}", point);
+    println!("Debug: {:?}", point);
+
+    println!("What does Point2D look like in binary: {:b}?", point);
+
+    let complex = Complex {
+        real: 3.3,
+        imag: 7.2
+    };
+
+    println!("Compare complex:");
     println!("Display: {}", complex);
     println!("Debug: {:?}", complex);
+
 }
